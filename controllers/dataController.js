@@ -9,7 +9,18 @@ let con = mysql.createPool({
 
 exports.getSideEffect = function(req,res){
     let drugname = req.body.drugname;
-    var sql = "select r.pt, r.primaryid, r.caseid, d.drugname from drug d inner join reaction r on r.primaryid = d.primaryid and r.caseid = d.caseid and d.drugname = '" + drugname + "';";
+    var sql = "select effect, ptCount, ptCount * 100 / total.c as percentage\n" +
+        "FROM\n" +
+        "(SELECT r.pt as effect, count(r.pt) as ptCount\n" +
+        "FROM project4.`drug` as d, project4.`reaction`as r\n" +
+        "where d.primaryid = r.primaryid and d.caseid = r.caseid and d.drugname = '" + drugname + "'\n" +
+        "group by r.pt ) AS ptTable,\n" +
+        "\n" +
+        " (SELECT count(*) as c\n" +
+        "FROM\n" +
+        "(SELECT distinct primaryid FROM project4.drug WHERE drugname = '" + drugname + "')  as totalCount\n" +
+        ") as total -- ;;\n";
+    //var sql = "select r.pt, r.primaryid, r.caseid, d.drugname from drug d inner join reaction r on r.primaryid = d.primaryid and r.caseid = d.caseid and d.drugname = '" + drugname + "';";
     con.query(sql, function (err, row, fields) {
         if (err)
             res.json({
