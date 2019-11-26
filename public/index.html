@@ -1,40 +1,119 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link href = "stylesheets/index.css" rel = "stylesheet">
-    <link href = "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel = stylesheet>
-    <link href = "https://use.fontawesome.com/releases/v5.8.2/css/all.css" rel = stylesheet>
-
-</head>
+<!DOCTYPE html>
+<html>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<style type="text/css">
+    .no-top-border {
+        border-top: none !important;
+    }
+</style>
 <body>
+​
 <div class="container">
     <div class="row">
-        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-            <div class="card card-signin my-5">
-                <div class="card-body">
-                    <h5 class="card-title text-center">Portal</h5>
-                    <form class="form-signin">
-                        <div class="form-label-group">
-                            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                            <label for="inputEmail">Brand</label>
-                        </div>
-
-                        <div class="form-label-group">
-                            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                            <label for="inputPassword">Drug</label>
-                        </div>
-
-                        <div class="custom-control custom-checkbox mb-3">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">calculate</label>
-                        </div>
-                    </form>
+        <div class="col-12" style="text-align: center;">
+            <h1>Enter the title here</h1>
+        </div>
+        <div class="col-md-6">
+            <form onsubmit="return false">
+                <input class="form-control" type="text" placeholder="Enter drug name" id="drug-name-form1"
+                       aria-label="Drug name" style="margin-bottom: 2rem" required>
+                <input class="form-control" type="text" placeholder="Enter side effect" id="side-effect"
+                       aria-label="Side effect" style="margin-bottom: 3rem" required>
+                <button class="btn btn-primary btn-sm" id="submit-ror" type="submit">Search</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form onsubmit="return false">
+                <input class="form-control" id="drug-name-form2" type="text" placeholder="Enter drug name"
+                       aria-label="Drug name" style="margin-bottom: 2rem">
+                <input class="form-control" type="text" id="brand-name" placeholder="Enter brand name"
+                       aria-label="brand name" style="margin-bottom: 1rem">
+                <div class="invalid-feedback" id="form2-invalid" style="display: none;">
+                    You must fill atleast one value.
                 </div>
-            </div>
+                <button class="btn btn-primary btn-sm" type="submit" style="margin-top: 2rem" onclick="submitForm2()">
+                    Search
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 5rem">
+        <div class="col-12" id="form1-table" style="display: none">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col" class="no-top-border"></th>
+                    <th scope="col" class="no-top-border">Yes side effect</th>
+                    <th scope="col" class="no-top-border">No side effect</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">Yes drug</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">No drug</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-12" id="form2-table" style="display: none">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col" class="no-top-border">#</th>
+                    <th scope="col" class="no-top-border">Drug name</th>
+                    <th scope="col" class="no-top-border">Side effect</th>
+                    <th scope="col" class="no-top-border">Frequency</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Kerala Gold</td>
+                    <td>Uncontrollable laughter</td>
+                    <td>Everyday if possible</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
+​
 </body>
+<script type="text/javascript" src="javascripts/indextoROR.js">
+
+
+    const submitForm2 = ($event) => {
+        const text1 = document.getElementById("drug-name-form2").value;
+        const text2 = document.getElementById("brand-name").value;
+        if (text1.length + text2.length === 0) {
+            document.getElementById("form2-invalid").style.display = "block";
+        } else {
+            document.getElementById("form2-invalid").style.display = "none";
+            if (table1) {
+                table1.style.display = "none";
+            }
+            table2.style.display = "block";
+        }
+    }
+</script>
 </html>
+​
