@@ -30,19 +30,17 @@
                        aria-label="Drug name" style="margin-bottom: 2rem" required>
                 <input class="form-control" type="text" placeholder="Enter side effect" id="side-effect"
                        aria-label="Side effect" style="margin-bottom: 3rem" required>
-                <button class="btn btn-primary btn-sm" id="submit-ror" type="submit">Search</button>
+                <button class="btn btn-primary btn-sm" id="submit-ror" type="submit">Calculate ROR</button>
             </form>
         </div>
         <div class="col-md-6">
             <form onsubmit="return false">
                 <input class="form-control" id="drug-name-form2" type="text" placeholder="Enter drug name"
                        aria-label="Drug name" style="margin-bottom: 2rem">
-                <input class="form-control" type="text" id="brand-name" placeholder="Enter brand name"
-                       aria-label="brand name" style="margin-bottom: 1rem">
                 <div class="invalid-feedback" id="form2-invalid" style="display: none;">
                     You must fill atleast one value.
                 </div>
-                <button class="btn btn-primary btn-sm" type="submit" style="margin-top: 2rem" onclick="submitForm2()">
+                <button class="btn btn-primary btn-sm" type="submit" style="margin-top: 2rem" id="submit-list">
                     Search
                 </button>
             </form>
@@ -96,24 +94,25 @@
         </div>
     </div>
 </div>
-​
+​<br>
+<p id="ROR" style="text-align:center;"></p>
 </body>
-<script type="text/javascript" src="javascripts/indextoROR.js">
+<script type="text/javascript" src="javascripts/indextoROR.js"></script>
+<script type="text/javascript" src="javascripts/indextoList.js"></script>
 
 
-    const submitForm2 = ($event) => {
-        const text1 = document.getElementById("drug-name-form2").value;
-        const text2 = document.getElementById("brand-name").value;
-        if (text1.length + text2.length === 0) {
-            document.getElementById("form2-invalid").style.display = "block";
-        } else {
-            document.getElementById("form2-invalid").style.display = "none";
-            if (table1) {
-                table1.style.display = "none";
-            }
-            table2.style.display = "block";
-        }
-    }
-</script>
+<!--    // const submitForm2 = ($event) => {-->
+<!--    //     const text1 = document.getElementById("drug-name-form2").value;-->
+<!--    //     const text2 = document.getElementById("brand-name").value;-->
+<!--    //     if (text1.length + text2.length === 0) {-->
+<!--    //         document.getElementById("form2-invalid").style.display = "block";-->
+<!--    //     } else {-->
+<!--    //         document.getElementById("form2-invalid").style.display = "none";-->
+<!--    //         if (table1) {-->
+<!--    //             table1.style.display = "none";-->
+<!--    //         }-->
+<!--    //         table2.style.display = "block";-->
+<!--    //     }-->
+<!--    // }-->
 </html>
 ​

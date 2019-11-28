@@ -5,16 +5,14 @@ var countofAllReactions = 0;
 var countofDrugsWithSideEffects = 0;
 var countofDrugsWithNoSideEffects = 0;
 var countofNoDrugsWithSideEffects = 0;
-getAllCounts();
 buttonToSearchROR.onclick = function () {
+    getAllCounts();
     const drugname = document.getElementById("drug-name-form1").value;
     const side_effect = document.getElementById("side-effect").value;
     if (drugname.length !== 0 && side_effect.length !== 0) {
         callCountforDrugWithSideEffect(drugname, side_effect);
         callCountforDrugwithNoSideEffect(drugname, side_effect);
         callCountforNoDrugWithSideEffects(drugname, side_effect);
-        document.getElementById("ndnsp").innerHTML = countofAllReactions;
-
         if (table2) {
             table2.style.display = "none";
         }
@@ -29,8 +27,13 @@ function getAllCounts() {
     xhrRor.send('');
     xhrRor.onload = function () {
         let jsonResponse = JSON.parse(xhrRor.response);
-        if (jsonResponse.response)
+        if (jsonResponse.response) {
             countofAllReactions = jsonResponse.result[0].count;
+            var countofNoDrugsWithNoSideEffects = countofAllReactions - (countofNoDrugsWithSideEffects + countofDrugsWithNoSideEffects + countofDrugsWithSideEffects);
+            document.getElementById("ndnsp").innerHTML = countofNoDrugsWithNoSideEffects + "";
+            console.log(calculateRor());
+            document.getElementById("ROR").innerHTML = calculateRor();
+        }
         else
             console.log(jsonResponse.response);
     };
@@ -51,6 +54,7 @@ function callCountforDrugWithSideEffect(drugname, side_effect) {
             console.log(jsonRepsonse.result[0].count);
             countofDrugsWithSideEffects = jsonRepsonse.result[0].count;
             document.getElementById("dsp").innerHTML = jsonRepsonse.result[0].count;
+
         }
     };
     xhrRor.send(body);
@@ -92,12 +96,13 @@ function callCountforNoDrugWithSideEffects(drugname, side_effect) {
         }
     };
     xhrRor.send(body);
-    console.log(calculateRor());
+
 
 }
 
 function calculateRor() {
-    return (countofAllReactions * countofDrugsWithSideEffects) / (countofNoDrugsWithSideEffects * countofDrugsWithNoSideEffects);
+    var countofNoDrugsWithNoSideEffects = countofAllReactions - (countofNoDrugsWithSideEffects + countofDrugsWithNoSideEffects + countofDrugsWithSideEffects);
+    return (countofNoDrugsWithNoSideEffects * countofDrugsWithSideEffects) / (countofNoDrugsWithSideEffects * countofDrugsWithNoSideEffects);
 }
 
 // const submitForm1 = () => {
