@@ -5,14 +5,15 @@ var countofAllReactions = 0;
 var countofDrugsWithSideEffects = 0;
 var countofDrugsWithNoSideEffects = 0;
 var countofNoDrugsWithSideEffects = 0;
-buttonToSearchROR.onclick = function () {
-    getAllCounts();
+
+buttonToSearchROR.onclick = function () {     //on click function get value from the form fields and call APIs
+    getAllCounts();                           // this function calls the API, get the count of all the data.
     const drugname = document.getElementById("drug-name-form1").value;
     const side_effect = document.getElementById("side-effect").value;
-    if (drugname.length !== 0 && side_effect.length !== 0) {
-        callCountforDrugWithSideEffect(drugname, side_effect);
-        callCountforDrugwithNoSideEffect(drugname, side_effect);
-        callCountforNoDrugWithSideEffects(drugname, side_effect);
+    if (drugname.length !== 0 && side_effect.length !== 0) { //this condition is to handle null point errors
+        callCountforDrugWithSideEffect(drugname, side_effect); // calls API to get count of all cases with the given drug and side effect.
+        callCountforDrugwithNoSideEffect(drugname, side_effect); // calls API to get count of all cases with the given drug but doesn't share the given side effect.
+        callCountforNoDrugWithSideEffects(drugname, side_effect); // calls API to get count of all cases with the given side effect but doesn't share the given drug name.
         if (table2) {
             table2.style.display = "none";
         }
@@ -21,17 +22,18 @@ buttonToSearchROR.onclick = function () {
 };
 
 function getAllCounts() {
-    var xhrRor = new XMLHttpRequest();
-    var urlRor = "http://localhost:3000/data/getNDNSP";
-    xhrRor.open('GET', urlRor, true);
-    xhrRor.send('');
-    xhrRor.onload = function () {
-        let jsonResponse = JSON.parse(xhrRor.response);
+    var xhrRor = new XMLHttpRequest();    // to create an object for the AJAX request.
+    var urlRor = "http://localhost:3000/data/getNDNSP"; // API url.
+    xhrRor.open('GET', urlRor, true); // opens a GET request method to fetch data.
+    xhrRor.send('');   // GET requests don't need request body
+    xhrRor.onload = function () {   // async function to handle the reponse.
+        let jsonResponse = JSON.parse(xhrRor.response);   //convert the data to JSON object
         if (jsonResponse.response) {
-            countofAllReactions = jsonResponse.result[0].count;
+            countofAllReactions = jsonResponse.result[0].count; //access the count object from the response
             var countofNoDrugsWithNoSideEffects = countofAllReactions - (countofNoDrugsWithSideEffects + countofDrugsWithNoSideEffects + countofDrugsWithSideEffects);
+            // above expression calculates the count of all cases without the given side effect and without the given drug name.
             document.getElementById("ndnsp").innerHTML = countofNoDrugsWithNoSideEffects + "";
-            console.log(calculateRor());
+            // console.log(calculateRor());
             document.getElementById("ROR").innerHTML = calculateRor();
         }
         else

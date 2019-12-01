@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var dataController = require('../controllers/dataController');
-
-router.post('/getSideEffect', dataController.getSideEffect);
+//determining the endpoint of the API. Each endpoint is to access a unique API. 'POST' and 'GET' indicates the type of HTTP methods
 router.post('/getDSP', dataController.getDrugAndSideEffect);
 router.post('/getDNSP', dataController.getDrugAndNoSideEffect);
 router.post('/getNDSP', dataController.getNoDrugAndSideEffect);

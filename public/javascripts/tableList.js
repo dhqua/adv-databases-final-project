@@ -5,6 +5,7 @@ const json = {
     "drugname": drugname
 };
 document.getElementById("heading1").innerHTML = "Data for " + drugname;
+//ajax function to call the API populate the table.
 $(document).ready(function () {
     $.ajax({
         url: url,
@@ -12,12 +13,12 @@ $(document).ready(function () {
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify(json),
-        cache: false,
+        cache: false,                   // turned off cache to reduce complications when there is a change in remote database.
         success: function (data) {
             var sideEffectData = "";
-            $.each(data.result, function (i, res) {
+            $.each(data.result, function (i, res) {   // response is an array of results. So the callback function iterates through the response.
                 console.log(res);
-                sideEffectData += "<tr>";
+                sideEffectData += "<tr>";   //populating the table
                 sideEffectData += "<td>" + res.effect + "</td>";
                 sideEffectData += "<td>" + res.ptCount + "</td>";
                 sideEffectData += "<td>" + res.percentage + "</td>";

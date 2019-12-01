@@ -5,10 +5,10 @@ let con = mysql.createPool({
     user: "root",
     database: "drugsideeffects",
     password: "268850",
-    insecureAuth: true
+    insecureAuth: true     //turned on insecureAuth to fix compatibility issues.
 });
 
-exports.getSideEffect = function(req,res){
+exports.getSideEffect = function (req, res) {   // API  function which handles the calculation of percentage of the reaction due to the given medicine
     let drugname = req.body.drugname;
     var sql = "select effect, ptCount, ptCount * 100 / total.c as percentage\n" +
         "FROM\n" +
@@ -23,7 +23,7 @@ exports.getSideEffect = function(req,res){
         "(SELECT distinct primaryid FROM drugsideeffects.drug WHERE drugname = '" + drugname + "')  as totalCount\n" +
         ") as total  order by percentage desc;\n";
     //var sql = "select r.pt, r.primaryid, r.caseid, d.drugname from drug d inner join reaction r on r.primaryid = d.primaryid and r.caseid = d.caseid and d.drugname = '" + drugname + "';";
-    con.query(sql, function (err, row, fields) {
+    con.query(sql, function (err, row, fields) {   //executes the above query.
         if (err)
             res.json({
                 response: err
@@ -33,7 +33,7 @@ exports.getSideEffect = function(req,res){
                 response: true,
                 result: row
             };
-        res.json(result);
+        res.json(result);  //sends the result in the json format.
     });
 };
 exports.getDrugAndSideEffect = function (req, res) {
