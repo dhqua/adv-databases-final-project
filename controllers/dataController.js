@@ -3,8 +3,9 @@ let con = mysql.createPool({
     connectionLimit: 10,
     host: "localhost",
     user: "root",
-    database: "project4",
-    password: "pammas",
+    database: "drugsideeffects",
+    password: "268850",
+    insecureAuth: true
 });
 
 exports.getSideEffect = function(req,res){
@@ -12,19 +13,20 @@ exports.getSideEffect = function(req,res){
     var sql = "select effect, ptCount, ptCount * 100 / total.c as percentage\n" +
         "FROM\n" +
         "(SELECT r.pt as effect, count(r.pt) as ptCount\n" +
-        "FROM project4.`drug` as d, project4.`reaction`as r\n" +
+        "FROM drugsideeffects.`drug` as d, drugsideeffects.`reaction`as r\n" +
         "where d.primaryid = r.primaryid and d.caseid = r.caseid and d.drugname = '" + drugname + "'\n" +
         "group by r.pt ) AS ptTable,\n" +
+        //"order by percentage,\n" +
         "\n" +
         " (SELECT count(*) as c\n" +
         "FROM\n" +
-        "(SELECT distinct primaryid FROM project4.drug WHERE drugname = '" + drugname + "')  as totalCount\n" +
-        ") as total -- ;;\n";
+        "(SELECT distinct primaryid FROM drugsideeffects.drug WHERE drugname = '" + drugname + "')  as totalCount\n" +
+        ") as total  order by percentage desc;\n";
     //var sql = "select r.pt, r.primaryid, r.caseid, d.drugname from drug d inner join reaction r on r.primaryid = d.primaryid and r.caseid = d.caseid and d.drugname = '" + drugname + "';";
     con.query(sql, function (err, row, fields) {
         if (err)
             res.json({
-                response: false
+                response: err
             });
         else
             var result = {
