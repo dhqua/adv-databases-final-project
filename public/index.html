@@ -27,7 +27,7 @@
         </div>
         <div class="col-md-6">
             <!--The form handles the second feature of the project, takes in drugname and side effect as input and uses button to search.-->
-            <form>
+            <form onsubmit="return false">
                 <input class="form-control" type="text" placeholder="Enter drug name" id="drug-name-form1"
                        aria-label="Drug name" style="margin-bottom: 2rem" required>
                 <input class="form-control" type="text" placeholder="Enter side effect" id="side-effect"
@@ -36,8 +36,7 @@
             </form>
         </div>
         <div class="col-md-6">
-            <!--The form handles the first feature of the project, takes in drugname as input and uses the button to redirect to the data page.-->
-            <form>
+            <form onsubmit="return false">
                 <input class="form-control" id="drug-name-form2" type="text" placeholder="Enter drug name"
                        aria-label="Drug name" style="margin-bottom: 2rem">
                 <div class="invalid-feedback" id="form2-invalid" style="display: none;">

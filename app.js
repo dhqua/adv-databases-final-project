@@ -4,8 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-
-var dataRouter = require('./routes/data');  // this is where we add the router to the sevrer file.
+var dataRouter = require('./routes/data');
 
 
 var app = express();
